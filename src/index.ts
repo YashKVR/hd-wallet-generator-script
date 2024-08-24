@@ -30,10 +30,14 @@ const generateSolWallet = async (account_number: Number) => {
 const generateEthWallet = async (account_number: Number) => {
     const mnemonic = generateMnemonic(256);
     const seed = mnemonicToSeedSync(mnemonic);
+    console.log("seed ==> ", seed);
+
     const path = `m/44'/60'/${account_number}'/0'` //This is the derivation path for Eth
     // const derivedSeed = derivePath(path, seed.toString('hex')).key;
     const hdNode = HDNodeWallet.fromSeed(seed);
     const derivedSeed = hdNode.derivePath(path);
+    console.log("derived seed: ", derivedSeed);
+
     const secret = derivedSeed.privateKey;
     const public_key = new Wallet(secret)
 
